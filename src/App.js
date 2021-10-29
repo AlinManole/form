@@ -1,5 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Succes from './components/Succes'
 
 class App extends React.Component {
   constructor() {
@@ -42,41 +43,54 @@ class App extends React.Component {
 
 
 
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault()
-    this.setState({ isSubmitted: e.target.value })
-    console.log(this.state)
+    this.setState({
+      isSubmitted: this.state.emailIsValid && this.state.passwordIsValid
+    })
   }
 
 
+
+
+
   render() {
-    console.log(this.state.emailIsValid)
+    
+    console.log(this.state.isSubmitted)
     return (
-      <form className="mx-auto p-5 m-5 d-flex w-25 flex-column justify-content-center" onSubmit={this.handleSubmit}>
-        <div className="mb-3 col-8">
-          <label  className="form-label">Email address</label>
-          <input type="email" className="form-control" id="exampleFormControlInput1" onChange={this.handleEmailChange} placeholder="Enter email..."></input>
-        </div>
-        <br />
-        <label>
-          Password
-          <br />
-          <div className="col-8">
-            <input type="password" className="form-control" id="inputPassword" onChange={this.handlePasswordChange} placeholder="Enter password..."></input>
-          </div>
-        </label>
-        <br />
-        <div className="form-check">
-          <input className="form-check-input" type="checkbox" value="" onChange={this.handleRememberMeChange} id="flexCheckDefault"></input>
-          <label className="form-check-label" >
-          Rember me
-          </label>
-        </div>
-        <br />
-        <input className="btn btn-primary w-25" type="submit" value="Submit"></input>   
-      </form>
+    
+        <>
+
+          {this.state.isSubmitted ? <Succes email={this.state.email} /> 
+          :(
+            <form className="mx-auto p-5 m-5 d-flex w-25 flex-column justify-content-center needs-validation" onSubmit={this.handleSubmit}>
+            <div className="mb-3 col-8">
+              <label  className="form-label">Email address</label>
+              <input type="email" className="form-control " id="exampleFormControlInput1" onChange={this.handleEmailChange} placeholder="Enter email..." required></input>
+            </div>
+            <br />
+            <label>
+              Password
+              <br />
+              <div className="col-8">
+                <input type="password" className="form-control " id="inputPassword" onChange={this.handlePasswordChange} placeholder="Enter password..." required></input>
+              </div>
+            </label>
+            <br />
+            <div className="form-check">
+              <input className="form-check-input" type="checkbox" value="" onChange={this.handleRememberMeChange} id="flexCheckDefault"></input>
+              <label className="form-check-label" >
+              Remember me
+              </label>
+            </div>
+            <br />
+            <input className="btn btn-primary w-25" type="submit" value="Submit"></input>   
+          </form>
+          )}
+        </>
     )
   }
 }
 
 export default App
+
